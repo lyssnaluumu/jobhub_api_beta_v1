@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:jobhub_api_beta_v1/api/models/model.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -6,12 +8,12 @@ part 'info_model.g.dart';
 
 @JsonSerializable()
 class Info implements Model {
-  Info({this.id, this.locale, this.organizationId, this.webSite});
+  Info({this.id, this.locale, this.organization_id, this.web_site});
 
   int? id;
   String? locale;
-  String? organizationId;
-  String? webSite;
+  String? organization_id;
+  String? web_site;
 
   @override
   Widget toWidget() {
@@ -21,9 +23,9 @@ class Info implements Model {
         const SizedBox(height: 5),
         Text(locale ?? 'Null'),
         const SizedBox(height: 5),
-        Text(organizationId ?? 'Null'),
+        Text(organization_id ?? 'Null'),
         const SizedBox(height: 5),
-        Text(webSite ?? 'Null'),
+        Text(web_site ?? 'Null'),
       ],
     );
   }

@@ -9,8 +9,8 @@ part of 'owner_model.dart';
 Owner _$OwnerFromJson(Map<String, dynamic> json) => Owner(
       id: json['id'] as int?,
       locale: json['locale'] as String?,
-      userName: json['userName'] as String?,
-      firstName: json['firstName'] as String?,
+      user_name: json['user_name'] as String?,
+      first_name: json['first_name'] as String?,
       cellphone: json['cellphone'] as String?,
       email: json['email'] as String?,
       avatar: json['avatar'] == null
@@ -21,8 +21,8 @@ Owner _$OwnerFromJson(Map<String, dynamic> json) => Owner(
 Map<String, dynamic> _$OwnerToJson(Owner instance) => <String, dynamic>{
       'id': instance.id,
       'locale': instance.locale,
-      'userName': instance.userName,
-      'firstName': instance.firstName,
+      'user_name': instance.user_name,
+      'first_name': instance.first_name,
       'cellphone': instance.cellphone,
       'email': instance.email,
       'avatar': instance.avatar,

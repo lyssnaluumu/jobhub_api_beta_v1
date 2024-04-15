@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:jobhub_api_beta_v1/api/models/model.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -9,7 +11,7 @@ class Avatar implements Model {
   Avatar({
     this.id,
     this.fileName,
-    this.fullUrl,
+    this.full_url,
     this.thumb,
     this.caption,
     this.size,
@@ -19,7 +21,7 @@ class Avatar implements Model {
 
   int? id;
   String? fileName;
-  String? fullUrl;
+  String? full_url;
   String? thumb;
   String? caption;
   int? size;
@@ -34,7 +36,7 @@ class Avatar implements Model {
         const SizedBox(height: 5),
         Text(fileName ?? 'Null'),
         const SizedBox(height: 5),
-        Text(fullUrl ?? 'Null'),
+        Text(full_url ?? 'Null'),
         const SizedBox(height: 5),
         Text(thumb ?? 'Null'),
         const SizedBox(height: 5),

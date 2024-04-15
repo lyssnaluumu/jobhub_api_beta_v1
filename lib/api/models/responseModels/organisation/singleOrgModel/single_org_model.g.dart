@@ -18,8 +18,8 @@ SingleOrgModel _$SingleOrgModelFromJson(Map<String, dynamic> json) =>
       owner: json['owner'] == null
           ? null
           : Owner.fromJson(json['owner'] as Map<String, dynamic>),
-      createdAt: json['createdAt'] as String?,
-      updatedAt: json['updatedAt'] as String?,
+      created_at: json['created_at'] as String?,
+      updated_at: json['updated_at'] as String?,
       info: json['info'] == null
           ? null
           : Info.fromJson(json['info'] as Map<String, dynamic>),
@@ -33,7 +33,7 @@ Map<String, dynamic> _$SingleOrgModelToJson(SingleOrgModel instance) =>
       'description': instance.description,
       'type': instance.type,
       'owner': instance.owner,
-      'createdAt': instance.createdAt,
-      'updatedAt': instance.updatedAt,
+      'created_at': instance.created_at,
+      'updated_at': instance.updated_at,
       'info': instance.info,
     };

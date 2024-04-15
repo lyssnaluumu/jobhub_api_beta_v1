@@ -10,8 +10,8 @@ class Owner implements Model {
   Owner({
     this.id,
     this.locale,
-    this.userName,
-    this.firstName,
+    this.user_name,
+    this.first_name,
     this.cellphone,
     this.email,
     this.avatar,
@@ -19,8 +19,8 @@ class Owner implements Model {
 
   int? id;
   String? locale;
-  String? userName;
-  String? firstName;
+  String? user_name;
+  String? first_name;
   String? cellphone;
   String? email;
   Avatar? avatar;
@@ -33,9 +33,9 @@ class Owner implements Model {
         const SizedBox(height: 5),
         Text(locale ?? 'Null'),
         const SizedBox(height: 5),
-        Text(userName ?? 'Null'),
+        Text(user_name ?? 'Null'),
         const SizedBox(height: 5),
-        Text(firstName ?? 'Null'),
+        Text(first_name ?? 'Null'),
         const SizedBox(height: 5),
         Text(cellphone ?? 'Null'),
         const SizedBox(height: 5),

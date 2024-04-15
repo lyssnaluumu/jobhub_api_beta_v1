@@ -18,17 +18,17 @@ class MainApp extends StatefulWidget {
 }
 
 class _MainAppState extends State<MainApp> {
+  Widget responseModelWidget = const Text('Null');
+
+  MethodType selectedMethodType = MethodType.get_;
+  ClientType selectedClientType = ClientType.organisation;
+
   @override
   Widget build(BuildContext context) {
-    Widget? responseModelWidget;
-
-    MethodType selectedMethodType = MethodType.get_;
-    ClientType selectedClientType = ClientType.organisation;
-
     void configureRequest({
       required ClientType cType,
       required MethodType mType,
-    }) {
+    }) async {
       switch (cType) {
         case ClientType.organisation:
           final requestModel = RequestModel(
@@ -37,7 +37,7 @@ class _MainAppState extends State<MainApp> {
             methodType: mType,
           );
           final responseModel =
-              ApiMapper.mapRequest(requestModel: requestModel);
+              await ApiMapper.mapRequest(requestModel: requestModel);
 
           // DEBUG PURPOSES
           if (responseModel is SingleOrgModel) {
@@ -78,74 +78,84 @@ class _MainAppState extends State<MainApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: Center(
+        body: Padding(
+          padding: const EdgeInsets.all(25),
           child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+            // DEBUG PURPOSES
+            child: ListView(
               children: [
-                const Text(
-                  'Get Single Organisation',
-                  style: TextStyle(fontSize: 16),
-                ),
-                const SizedBox(height: 15),
-                Row(
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    DropdownMenu(
-                      enableSearch: false,
-                      helperText: 'Select method',
-                      initialSelection: selectedMethodType, // MethodType.get_
-                      onSelected: (type) {
-                        selectedMethodType = type ?? selectedMethodType;
-                      },
-                      dropdownMenuEntries: const [
-                        DropdownMenuEntry(value: MethodType.get_, label: 'Get'),
-                        DropdownMenuEntry(
-                            value: MethodType.post_, label: 'Post'),
-                        DropdownMenuEntry(value: MethodType.put_, label: 'Put'),
-                        DropdownMenuEntry(
-                            value: MethodType.delete_, label: 'Delete'),
+                    const Text(
+                      'Get Single Organisation',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    const SizedBox(height: 15),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        DropdownMenu(
+                          enableSearch: false,
+                          helperText: 'Select method',
+                          initialSelection:
+                              selectedMethodType, // MethodType.get_
+                          onSelected: (type) {
+                            selectedMethodType = type ?? selectedMethodType;
+                          },
+                          dropdownMenuEntries: const [
+                            DropdownMenuEntry(
+                                value: MethodType.get_, label: 'GET'),
+                            DropdownMenuEntry(
+                                value: MethodType.post_, label: 'POST'),
+                            DropdownMenuEntry(
+                                value: MethodType.put_, label: 'PUT'),
+                            DropdownMenuEntry(
+                                value: MethodType.delete_, label: 'DELETE'),
+                          ],
+                        ),
+                        const SizedBox(width: 15),
+                        DropdownMenu(
+                          enableSearch: false,
+                          helperText: 'Select client',
+                          initialSelection:
+                              selectedClientType, // ClientType.organisation
+                          onSelected: (type) {
+                            selectedClientType = type ?? selectedClientType;
+                          },
+                          dropdownMenuEntries: const [
+                            DropdownMenuEntry(
+                              value: ClientType.auth,
+                              label: 'Auth',
+                            ),
+                            DropdownMenuEntry(
+                              value: ClientType.user,
+                              label: 'User',
+                            ),
+                            DropdownMenuEntry(
+                              value: ClientType.finance,
+                              label: 'Finance',
+                            ),
+                            DropdownMenuEntry(
+                              value: ClientType.organisation,
+                              label: 'Organisation',
+                            ),
+                          ],
+                        ),
                       ],
                     ),
-                    const SizedBox(width: 15),
-                    DropdownMenu(
-                      enableSearch: false,
-                      helperText: 'Select client',
-                      initialSelection:
-                          selectedClientType, // ClientType.organisation
-                      onSelected: (type) {
-                        selectedClientType = type ?? selectedClientType;
-                      },
-                      dropdownMenuEntries: const [
-                        DropdownMenuEntry(
-                          value: ClientType.auth,
-                          label: 'Auth',
-                        ),
-                        DropdownMenuEntry(
-                          value: ClientType.user,
-                          label: 'User',
-                        ),
-                        DropdownMenuEntry(
-                          value: ClientType.finance,
-                          label: 'Finance',
-                        ),
-                        DropdownMenuEntry(
-                          value: ClientType.organisation,
-                          label: 'Organisation',
-                        ),
-                      ],
+                    const SizedBox(height: 15),
+                    ElevatedButton(
+                      onPressed: () => configureRequest(
+                        cType: selectedClientType,
+                        mType: selectedMethodType,
+                      ),
+                      child: const Text('Request'),
                     ),
+                    const SizedBox(height: 5),
+                    responseModelWidget,
                   ],
-                ),
-                const SizedBox(height: 15),
-                ElevatedButton(
-                  onPressed: () => configureRequest(
-                    cType: selectedClientType,
-                    mType: selectedMethodType,
-                  ),
-                  child: const Text('Request'),
-                ),
-                const SizedBox(height: 5),
-                responseModelWidget ?? const Text('Null')
+                )
               ],
             ),
           ),

@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:jobhub_api_beta_v1/api/models/model.dart';
 import 'package:jobhub_api_beta_v1/api/models/responseModels/organisation/infoModel/info_model.dart';
@@ -16,8 +18,8 @@ class SingleOrgModel implements Model {
     this.description,
     this.type,
     this.owner,
-    this.createdAt,
-    this.updatedAt,
+    this.created_at,
+    this.updated_at,
     this.info,
   });
 
@@ -27,8 +29,8 @@ class SingleOrgModel implements Model {
   String? description;
   TypeModel? type;
   Owner? owner;
-  String? createdAt;
-  String? updatedAt;
+  String? created_at;
+  String? updated_at;
   Info? info;
 
   @override
@@ -47,9 +49,9 @@ class SingleOrgModel implements Model {
         const SizedBox(height: 5),
         owner?.toWidget() ?? const Text('Null'),
         const SizedBox(height: 5),
-        Text(createdAt ?? 'Null'),
+        Text(created_at ?? 'Null'),
         const SizedBox(height: 5),
-        Text(updatedAt ?? 'Null'),
+        Text(updated_at ?? 'Null'),
         const SizedBox(height: 5),
         info?.toWidget() ?? const Text('Null'),
       ],

@@ -9,7 +9,7 @@ part of 'avatar_model.dart';
 Avatar _$AvatarFromJson(Map<String, dynamic> json) => Avatar(
       id: json['id'] as int?,
       fileName: json['fileName'] as String?,
-      fullUrl: json['fullUrl'] as String?,
+      full_url: json['full_url'] as String?,
       thumb: json['thumb'] as String?,
       caption: json['caption'] as String?,
       size: json['size'] as int?,
@@ -20,7 +20,7 @@ Avatar _$AvatarFromJson(Map<String, dynamic> json) => Avatar(
 Map<String, dynamic> _$AvatarToJson(Avatar instance) => <String, dynamic>{
       'id': instance.id,
       'fileName': instance.fileName,
-      'fullUrl': instance.fullUrl,
+      'full_url': instance.full_url,
       'thumb': instance.thumb,
       'caption': instance.caption,
       'size': instance.size,
