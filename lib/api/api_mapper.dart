@@ -7,16 +7,16 @@ class ApiMapper {
     
     switch (requestModel.methodType) {
       case (MethodType.get_):
-        client.get(requestModel);
+        return client.get(requestModel);
       
       case (MethodType.post_):
-        client.post(requestModel);
+        return client.post(requestModel);
       
       case (MethodType.put_):
-        client.put(requestModel);
+        return client.put(requestModel);
       
       case (MethodType.delete_):
-        client.delete(requestModel);
+        return client.delete(requestModel);
       
       default:
         throw Exception('Invalid Method Type');

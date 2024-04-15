@@ -3,7 +3,6 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:jobhub_api_beta_v1/api/api_handler.dart';
 import 'package:jobhub_api_beta_v1/api/models/model.dart';
 import 'package:jobhub_api_beta_v1/api/models/request_model.dart';
-import 'package:jobhub_api_beta_v1/api/models/responseModels/org/singleOrgModel/single_org_model.dart';
 import 'package:jobhub_api_beta_v1/api/models/responseModels/response_model.dart';
 
 final _dio = Dio(
@@ -15,7 +14,8 @@ final _dio = Dio(
 );
 
 class ApiPerformer {
-  static Future<Model> performRequest({ required RequestModel requestModel }) async {
+  static Future<Model> performRequest(
+      {required RequestModel requestModel}) async {
     try {
       final response = await _dio.get(requestModel.endpoint);
 
@@ -26,23 +26,6 @@ class ApiPerformer {
 
       final responseModel = apiResponse.constructModel(
           clientType: requestModel.clientType, response: response.data);
-          
-      // DEBUG PURPOSES
-      if (responseModel is SingleOrgModel) {
-        final Map<String, dynamic> instance = {
-          'id': responseModel.id,
-          'locale': responseModel.locale,
-          'title': responseModel.title,
-          'description': responseModel.description,
-          'type': responseModel.type,
-          'owner': responseModel.owner,
-          'createdAt': responseModel.createdAt,
-          'updatedAt': responseModel.updatedAt,
-          'info': responseModel.info,
-        };
-
-        print(instance);
-      }
 
       return responseModel;
     } catch (e) {

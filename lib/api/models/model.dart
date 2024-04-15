@@ -1,6 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:jobhub_api_beta_v1/api/api_client.dart';
-import 'package:jobhub_api_beta_v1/api/models/responseModels/org/errorModel/error_model.dart';
-import 'package:jobhub_api_beta_v1/api/models/responseModels/org/singleOrgModel/single_org_model.dart';
+import 'package:jobhub_api_beta_v1/api/models/responseModels/organisation/errorModel/error_model.dart';
+import 'package:jobhub_api_beta_v1/api/models/responseModels/organisation/singleOrgModel/single_org_model.dart';
 
 abstract class Model {
   factory Model.getModel({ required ClientType clientType, required Map<String, dynamic> response }) {
@@ -24,4 +25,6 @@ abstract class Model {
         throw Exception('Invalid Client Type');
     }
   }
+
+  Widget toWidget();
 }

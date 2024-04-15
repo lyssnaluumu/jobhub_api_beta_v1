@@ -3,20 +3,32 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:jobhub_api_beta_v1/api/api_client.dart';
 import 'package:jobhub_api_beta_v1/api/api_mapper.dart';
 import 'package:jobhub_api_beta_v1/api/models/request_model.dart';
+import 'package:jobhub_api_beta_v1/api/models/responseModels/organisation/singleOrgModel/single_org_model.dart';
 
 Future<void> main() async {
   await dotenv.load(fileName: ".env");
   runApp(const MainApp());
 }
 
-class MainApp extends StatelessWidget {
+class MainApp extends StatefulWidget {
   const MainApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    MethodType selectedMethodType = MethodType.get_;
+  State<MainApp> createState() => _MainAppState();
+}
 
-    void configureRequest({ required ClientType cType, required MethodType mType }) {
+class _MainAppState extends State<MainApp> {
+  @override
+  Widget build(BuildContext context) {
+    Widget? responseModelWidget;
+
+    MethodType selectedMethodType = MethodType.get_;
+    ClientType selectedClientType = ClientType.organisation;
+
+    void configureRequest({
+      required ClientType cType,
+      required MethodType mType,
+    }) {
       switch (cType) {
         case ClientType.organisation:
           final requestModel = RequestModel(
@@ -24,7 +36,15 @@ class MainApp extends StatelessWidget {
             clientType: cType,
             methodType: mType,
           );
-          ApiMapper.mapRequest(requestModel: requestModel);
+          final responseModel =
+              ApiMapper.mapRequest(requestModel: requestModel);
+
+          // DEBUG PURPOSES
+          if (responseModel is SingleOrgModel) {
+            setState(() {
+              responseModelWidget = responseModel.toWidget();
+            });
+          }
 
         case ClientType.auth:
           final requestModel = RequestModel(
@@ -68,28 +88,64 @@ class MainApp extends StatelessWidget {
                   style: TextStyle(fontSize: 16),
                 ),
                 const SizedBox(height: 15),
-                DropdownMenu(
-                  enableSearch: false,
-                  helperText: 'Select method',
-                  initialSelection: selectedMethodType, // MethodType.get_
-                  onSelected: (type) {
-                    selectedMethodType = type ?? selectedMethodType;
-                  },
-                  dropdownMenuEntries: const [
-                    DropdownMenuEntry(value: MethodType.get_, label: 'Get'),
-                    DropdownMenuEntry(value: MethodType.post_, label: 'Post'),
-                    DropdownMenuEntry(value: MethodType.put_, label: 'Put'),
-                    DropdownMenuEntry(
-                        value: MethodType.delete_, label: 'Delete'),
+                Row(
+                  children: [
+                    DropdownMenu(
+                      enableSearch: false,
+                      helperText: 'Select method',
+                      initialSelection: selectedMethodType, // MethodType.get_
+                      onSelected: (type) {
+                        selectedMethodType = type ?? selectedMethodType;
+                      },
+                      dropdownMenuEntries: const [
+                        DropdownMenuEntry(value: MethodType.get_, label: 'Get'),
+                        DropdownMenuEntry(
+                            value: MethodType.post_, label: 'Post'),
+                        DropdownMenuEntry(value: MethodType.put_, label: 'Put'),
+                        DropdownMenuEntry(
+                            value: MethodType.delete_, label: 'Delete'),
+                      ],
+                    ),
+                    const SizedBox(width: 15),
+                    DropdownMenu(
+                      enableSearch: false,
+                      helperText: 'Select client',
+                      initialSelection:
+                          selectedClientType, // ClientType.organisation
+                      onSelected: (type) {
+                        selectedClientType = type ?? selectedClientType;
+                      },
+                      dropdownMenuEntries: const [
+                        DropdownMenuEntry(
+                          value: ClientType.auth,
+                          label: 'Auth',
+                        ),
+                        DropdownMenuEntry(
+                          value: ClientType.user,
+                          label: 'User',
+                        ),
+                        DropdownMenuEntry(
+                          value: ClientType.finance,
+                          label: 'Finance',
+                        ),
+                        DropdownMenuEntry(
+                          value: ClientType.organisation,
+                          label: 'Organisation',
+                        ),
+                      ],
+                    ),
                   ],
                 ),
                 const SizedBox(height: 15),
                 ElevatedButton(
                   onPressed: () => configureRequest(
-                      cType: ClientType.organisation,
-                      mType: selectedMethodType),
+                    cType: selectedClientType,
+                    mType: selectedMethodType,
+                  ),
                   child: const Text('Request'),
-                )
+                ),
+                const SizedBox(height: 5),
+                responseModelWidget ?? const Text('Null')
               ],
             ),
           ),
