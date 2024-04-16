@@ -36,6 +36,7 @@ class _MainAppState extends State<MainApp> {
             clientType: cType,
             methodType: mType,
           );
+
           final responseModel =
               await ApiMapper.mapRequest(requestModel: requestModel);
 

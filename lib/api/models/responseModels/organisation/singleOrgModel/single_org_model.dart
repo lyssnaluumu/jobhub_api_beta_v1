@@ -27,7 +27,7 @@ class SingleOrgModel implements Model {
   String? locale;
   String? title;
   String? description;
-  TypeModel? type;
+  TypeModel? type;                                                                                                                                                                
   Owner? owner;
   String? created_at;
   String? updated_at;

@@ -1,4 +1,5 @@
 import 'package:jobhub_api_beta_v1/api/api_performer.dart';
+import 'package:jobhub_api_beta_v1/api/models/model.dart';
 import 'package:jobhub_api_beta_v1/api/models/request_model.dart';
 
 enum ClientType { organisation, user, auth, finance, error }
@@ -6,10 +7,13 @@ enum ClientType { organisation, user, auth, finance, error }
 enum MethodType { get_, post_, put_, delete_ }
 
 abstract class ApiClient {
-  void get(RequestModel params);
-  void post(RequestModel params);
-  void put(RequestModel params);
-  void delete(RequestModel params);
+  // Future<Model> can be replaced with void, yeah... it's incorrect, but still works somehow...
+  // As far as i understand void gets casted by ApiPerformer return type, which is Future<Model>
+
+  Future<Model> get(RequestModel params);
+  Future<Model> post(RequestModel params);
+  Future<Model> put(RequestModel params);
+  Future<Model> delete(RequestModel params);
 
   factory ApiClient.getClient(ClientType type) {
     switch (type) {
@@ -33,18 +37,18 @@ abstract class ApiClient {
 
 class OrgApiClient implements ApiClient {
   @override
-  void get(RequestModel requestModel) =>
+  Future<Model> get(RequestModel requestModel) =>
       ApiPerformer.performRequest(requestModel: requestModel);
 
   @override
-  void post(RequestModel requestModel) =>
+  Future<Model> post(RequestModel requestModel) =>
       ApiPerformer.performRequest(requestModel: requestModel);
 
   @override
-  void put(RequestModel requestModel) =>
+  Future<Model> put(RequestModel requestModel) =>
       ApiPerformer.performRequest(requestModel: requestModel);
 
   @override
-  void delete(RequestModel requestModel) =>
+  Future<Model> delete(RequestModel requestModel) =>
       ApiPerformer.performRequest(requestModel: requestModel);
 }
